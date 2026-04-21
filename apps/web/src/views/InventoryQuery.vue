@@ -120,7 +120,7 @@
     <el-dialog v-model="showInboundDialog" title="物料入库" width="500px">
       <el-form ref="inboundFormRef" :model="inboundForm" :rules="inboundRules" label-width="100px">
         <el-form-item label="物料名称">
-          <el-input v-model="selectedMaterial?.materialName" disabled />
+          <el-input :value="selectedMaterial?.materialName || ''" disabled />
         </el-form-item>
         <el-form-item label="入库数量" prop="quantity">
           <el-input-number v-model="inboundForm.quantity" :min="1" style="width: 100%" />
@@ -158,10 +158,10 @@
     <el-dialog v-model="showOutboundDialog" title="物料出库" width="500px">
       <el-form ref="outboundFormRef" :model="outboundForm" :rules="outboundRules" label-width="100px">
         <el-form-item label="物料名称">
-          <el-input v-model="selectedMaterial?.materialName" disabled />
+          <el-input :value="selectedMaterial?.materialName || ''" disabled />
         </el-form-item>
         <el-form-item label="当前库存">
-          <el-input v-model="selectedMaterial?.totalQuantity" disabled />
+          <el-input :value="selectedMaterial?.totalQuantity || 0" disabled />
         </el-form-item>
         <el-form-item label="出库数量" prop="quantity">
           <el-input-number v-model="outboundForm.quantity" :min="1" :max="selectedMaterial?.totalQuantity" style="width: 100%" />

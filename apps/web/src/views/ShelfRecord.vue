@@ -128,7 +128,7 @@ const fetchData = async () => {
       params.startDate = searchForm.dateRange[0];
       params.endDate = searchForm.dateRange[1];
     }
-    const res = await getShelfRecordList(params);
+    const res = await getShelfRecordList(params) as any;
     if (res.code === 200) {
       tableData.value = res.data.list;
       pagination.total = res.data.pagination.total;
