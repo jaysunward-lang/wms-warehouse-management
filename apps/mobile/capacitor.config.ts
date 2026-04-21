@@ -5,20 +5,24 @@ const config: CapacitorConfig = {
   appName: 'WMS仓库管理',
   webDir: 'dist',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'https',
+    allowNavigation: ['*']
   },
   android: {
     buildOptions: {
       keystorePath: undefined,
       keystoreAlias: undefined
-    }
+    },
+    minSdkVersion: 22,
+    targetSdkVersion: 33
   },
   plugins: {
     SplashScreen: {
-      launchShowDuration: 2000,
+      launchShowDuration: 3000,
       backgroundColor: '#409eff',
       showSpinner: true,
-      spinnerColor: '#ffffff'
+      spinnerColor: '#ffffff',
+      androidSpinnerStyle: 'large'
     }
   }
 };
