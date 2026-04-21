@@ -3,9 +3,6 @@ name: Build WMS APK
 on:
   push:
     branches: [ main, master ]
-    paths:
-      - 'apps/mobile/**'
-      - '.github/workflows/build-apk.yml'
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
@@ -34,7 +31,6 @@ jobs:
       - name: Build Mobile App
         run: |
           cd apps/mobile
-          # Skip TypeScript check and build directly with vite
           npx vite build
 
       - name: Setup Java
@@ -46,42 +42,34 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Grant execute permission for gradlew
-        run: |
-          cd apps/mobile/android
-          chmod +x gradlew
-
-      - name: Sync Capacitor
+      - name: Build with Capacitor
         run: |
           cd apps/mobile
           pnpm exec cap sync android
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
 
-      - name: Build APK with Gradle
+      - name: List output files
         run: |
-          cd apps/mobile/android
-          ./gradlew assembleDebug --stacktrace
-
-      - name: Check APK exists
-        run: |
-          ls -la apps/mobile/android/app/build/outputs/apk/debug/
+          find apps/mobile/android -name "*.apk" -type f
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: wms-apk
           path: apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: warn
           retention-days: 30
 
-      - name: Upload APK to Release
-        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+      - name: Create Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: softprops/action-gh-release@v1
         with:
           files: apps/mobile/android/app/build/outputs/apk/debug/app-debug.apk
-          tag_name: apk-build-${{ github.run_number }}
-          name: WMS APK Build ${{ github.run_number }}
+          tag_name: v1.0.${{ github.run_number }}
+          name: WMS APK v1.0.${{ github.run_number }}
           body: |
             Automated APK build for WMS Warehouse Management System
-            - Build Date: ${{ github.event.head_commit.timestamp }}
-            - Commit: ${{ github.sha }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
