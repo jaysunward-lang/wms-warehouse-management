@@ -46,15 +46,24 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Grant execute permission for gradlew
+        run: |
+          cd apps/mobile/android
+          chmod +x gradlew
+
       - name: Sync Capacitor
         run: |
           cd apps/mobile
           pnpm exec cap sync android
 
-      - name: Build APK
+      - name: Build APK with Gradle
         run: |
           cd apps/mobile/android
-          ./gradlew assembleDebug
+          ./gradlew assembleDebug --stacktrace
+
+      - name: Check APK exists
+        run: |
+          ls -la apps/mobile/android/app/build/outputs/apk/debug/
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
