@@ -12,6 +12,8 @@ import {
   NavBar, 
   Tabbar, 
   TabbarItem,
+  Tab,
+  Tabs,
   Field,
   Form,
   Toast,
@@ -43,7 +45,7 @@ const app = createApp(App);
 
 // 注册Vant组件
 const vantComponents = [
-  Button, Cell, CellGroup, NavBar, Tabbar, TabbarItem,
+  Button, Cell, CellGroup, NavBar, Tabbar, TabbarItem, Tab, Tabs,
   Field, Form, Toast, Dialog, List, PullRefresh, Search,
   Icon, Grid, GridItem, Card, Tag, Popup, Picker,
   DatePicker, TimePicker, NumberKeyboard, PasswordInput, Loading,
