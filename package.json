@@ -1,0 +1,29 @@
+{
+  "name": "wms-system",
+  "version": "1.0.0",
+  "description": "WMS仓库管理系统 - 支持网页端和APK移动端",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "db:migrate": "cd database && npm run migrate",
+    "db:seed": "cd database && npm run seed",
+    "server:dev": "cd server && npm run dev",
+    "web:dev": "cd apps/web && npm run dev",
+    "mobile:dev": "cd apps/mobile && npm run dev",
+    "mobile:build": "cd apps/mobile && npm run build && npx cap sync android",
+    "mobile:android": "cd apps/mobile/android && ./gradlew assembleDebug"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "server",
+    "database"
+  ]
+}

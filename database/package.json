@@ -1,0 +1,14 @@
+{
+  "name": "@wms/database",
+  "version": "1.0.0",
+  "description": "WMS数据库脚本",
+  "scripts": {
+    "migrate": "node scripts/migrate.js",
+    "seed": "node scripts/seed.js",
+    "reset": "node scripts/reset.js"
+  },
+  "dependencies": {
+    "mysql2": "^3.6.5",
+    "dotenv": "^16.3.1"
+  }
+}
